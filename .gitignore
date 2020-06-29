@@ -1,2 +1,7 @@
 spring-boot-container/.idea/
 spring-boot-container/target/
+rsb/target/
+rsb/.idea/
+reactive-snippets/target/
+reactive-snippets/.idea/
+
