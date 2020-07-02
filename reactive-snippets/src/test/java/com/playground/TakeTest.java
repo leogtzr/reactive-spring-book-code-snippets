@@ -15,6 +15,12 @@ public class TakeTest {
     }
 
     @Test
+    public void take2() {
+        final Flux<Integer> take = Flux.range(1, 10).filter(n -> n % 2  == 0);
+        StepVerifier.create(take).expectNext(2, 4, 6, 8, 10).verifyComplete();
+    }
+
+    @Test
     public void takeUntil() {
         final var count = 50;
         final Flux<Integer> take = range().takeUntil(n -> n == count);
