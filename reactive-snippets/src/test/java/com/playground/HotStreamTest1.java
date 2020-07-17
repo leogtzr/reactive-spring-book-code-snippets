@@ -12,6 +12,8 @@ import java.util.function.Consumer;
 
 public class HotStreamTest1 {
 
+    // The first subscriber sees all the elements since it subscribed at the outset.
+
     @Test
     public void hot() throws Exception {
         var first = new ArrayList<Integer>();
@@ -31,7 +33,6 @@ public class HotStreamTest1 {
         sink.complete();
 
         Assertions.assertTrue(first.size() > second.size());
-
     }
 
     private Consumer<Integer> collect(final List<Integer> collection) {
