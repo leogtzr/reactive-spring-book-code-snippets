@@ -13,7 +13,8 @@ public class ControlFlowZipTest {
         final Flux<String> zip = Flux.zip(first, second)
                 .map(tuple -> this.from(tuple.getT1(), tuple.getT2()));
 
-        StepVerifier.create(zip).expectNext("1:a", "2:b", "3:c")
+        StepVerifier.create(zip)
+                .expectNext("1:a", "2:b", "3:c")
                 .verifyComplete();
 
     }
