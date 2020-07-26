@@ -7,8 +7,5 @@ import org.springframework.beans.factory.annotation.Autowired;
 public abstract class BaseCustomerRepositoryTest {
 
     public abstract SimpleCustomerRepository getRepository();
-
-    @Autowired
-    private CustomerDatabaseInitializer initializer;
-
+    
 }
