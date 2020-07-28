@@ -1,22 +1,17 @@
 package com.reactive.orders.repository;
 
 import com.reactive.orders.domain.Order;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import reactor.core.publisher.Flux;
 import reactor.test.StepVerifier;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.function.Predicate;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @DataMongoTest
 class OrderRepositoryTest {
