@@ -6,6 +6,7 @@ import com.reactive.orders.repository.OrderRepository;
 import lombok.extern.log4j.Log4j2;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.util.StreamUtils;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 import java.io.IOException;
@@ -46,6 +49,18 @@ class OrderServiceTest {
         log.warn("Be sure MongoDB supports replicas. Try:\n\n" + instructions);
     }
 
+    @BeforeEach
+    public void configureCollectionsBeforeTests() {
+        Mono<Boolean> createIfMissing = template.collectionExists(Order.class) //
+                .filter(x -> !x) //
+                .flatMap(exists -> template.createCollection(Order.class)) //
+                .thenReturn(true);
+        StepVerifier //
+                .create(createIfMissing) //
+                .expectNextCount(1) //
+                .verifyComplete();
+    }
+
     @Test
     public void createOrders() {
         final Publisher<Order> orders = this.repository
@@ -57,7 +72,37 @@ class OrderServiceTest {
                 .create(orders)
                 .expectNextCount(3)
                 .verifyComplete()
-                ;
+        ;
+    }
+
+    @Test
+    public void executeRollback() {
+        this.runTransactionalTest(this.service.createOrders("1", "2", null));
+    }
+
+    @Test
+    public void transactionalOperatorRollback() {
+        this.runTransactionalTest(this.service.createOrders("1", "2", null));
+    }
+
+    @Test
+    public void transactionalRollback() {
+        this.runTransactionalTest(this.service.createOrders("1", "2", null));
+    }
+
+    private void runTransactionalTest(Flux<Order> ordersInTx) {
+        Publisher<Order> orders = this.repository //
+                .deleteAll() //
+                .thenMany(ordersInTx) //
+                .thenMany(this.repository.findAll());
+        StepVerifier //
+                .create(orders) //
+                .expectNextCount(0) //
+                .verifyError();
+        StepVerifier //
+                .create(this.repository.findAll()) //
+                .expectNextCount(0) //
+                .verifyComplete();
     }
 
 }

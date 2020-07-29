@@ -1,0 +1,3 @@
+# For some reason I was getting errors after I upgraded to mongodb 4.2, the following command works well.
+sudo mongodb --config /etc/mongodb.conf --dbpath /data/db/
+
