@@ -25,7 +25,7 @@ public class OrderService {
     private Flux<Order> buildOrderFlux(final Function<Order, Mono<Order>> callback, final String[] productIDs) {
         return Flux.just(productIDs)
                 .map(pid -> {
-                    Assert.notNull(pid, "the producet ID shouldn't be null");
+                    Assert.notNull(pid, "the product ID shouldn't be null");
                     return pid;
                 })
                 .map(x -> new Order(null, x))

@@ -82,6 +82,8 @@ class OrderServiceTest {
 
     @Test
     public void transactionalOperatorRollback() {
+        // This test demonstrates that writing three records, one of which is null, results in a rollback with no
+        //observable side effects.
         this.runTransactionalTest(this.service.createOrders("1", "2", null));
     }
 
