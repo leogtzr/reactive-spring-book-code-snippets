@@ -22,9 +22,9 @@ import static org.springframework.web.reactive.function.server.ServerResponse.ok
 public class CustomRoutePredicates {
 
     private final HandlerFunction<ServerResponse> handler =
-            request -> ok().syncBody(
-                    "Hello, " + request.queryParam("name").orElse("world") + "!"
-            );
+        request -> ok().syncBody(
+                "Hello, " + request.queryParam("name").orElse("world") + "!"
+        );
 
     @Bean
     public RouterFunction<ServerResponse> customRequestPredicates() {
