@@ -5,8 +5,6 @@ import reactor.core.publisher.Flux;
 import java.time.Duration;
 import java.util.concurrent.atomic.AtomicLong;
 
-import com.customer.utils.CountAndString;
-
 public abstract class IntervalMessageProducer {
 
     public static Flux<String> produce(final int c) {
@@ -19,6 +17,11 @@ public abstract class IntervalMessageProducer {
 
     private static Flux<CountAndString> doProduceCountAndStrings() {
         final var counter = new AtomicLong();
+
+        /*
+            This endpoint produces new CountAndString values every second using the Flux.interval operator.
+         */
+
         return Flux.interval(Duration.ofSeconds(1))
                 .map(i -> new CountAndString(counter.incrementAndGet()))
                 ;
