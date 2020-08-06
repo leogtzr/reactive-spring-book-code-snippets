@@ -1,0 +1,33 @@
+[18:00]leo@lein ~ $ http :8080/greet/single/Leonardo
+HTTP/1.1 200 OK
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Content-Length: 58
+Content-Type: application/json
+Expires: 0
+Pragma: no-cache
+Referrer-Policy: no-referrer
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1 ; mode=block
+
+{
+    "message": "Hello Leonardo @ 2020-08-06T00:00:37.861315Z"
+}
+
+0 [18:00]leo@lein ~ $ http :8080/greet/many/Leonardo
+HTTP/1.1 200 OK
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Content-Type: text/event-stream;charset=UTF-8
+Expires: 0
+Pragma: no-cache
+Referrer-Policy: no-referrer
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1 ; mode=block
+transfer-encoding: chunked
+
+^C
+
+For the authenticated one:
+http://localhost:8080/greet/authenticated
+

@@ -23,6 +23,10 @@ public class TickerSseController {
         // Used to wrap a Publisher<T> ...
         final var updates = new ReactiveDataDriverContextVariable(producer, 1);
         model.addAttribute("updates", updates);
+        /*
+The return value for the controller is in a special format used by Thymeleaf to signify that it should render a fragment - in
+this case, that fragment refers to the div element, updateBlock, containing our loop - found inside a containing view, ticker.
+         */
         return "ticker :: #updateBlock";
     }
 
