@@ -32,7 +32,7 @@ import java.util.concurrent.ConcurrentHashMap;
 //}
 
 @Repository
-interface CustomerRepository extends ReactiveMongoRepository<Customer, String> {
+public interface CustomerRepository extends ReactiveMongoRepository<Customer, String> {
 
     // <1>
     Flux<Customer> findByName(String name);
